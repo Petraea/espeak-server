@@ -1,3 +1,4 @@
+#!/usr/bin/python
 from string import ascii_lowercase, digits
 ALLOWCHARS=ascii_lowercase+digits+'-+'
 import subprocess
