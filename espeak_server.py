@@ -19,7 +19,7 @@ class Serve(protocol.Protocol):
             amp=str(min(max(int(bits.pop(0) or amp),0),20))
             kaps=str(min(max(int(bits.pop(0) or kaps),0),99))
         except Exception as e:
-            print (e)
+            pass
         s = subprocess.Popen(['espeak','--stdin','-v'+voice,'-k'+kaps,'-s'+spd,'-p'+pitch,'-a'+amp],stdin=subprocess.PIPE,stderr=subprocess.PIPE)
         s.communicate(words)
 def main():
