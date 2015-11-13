@@ -10,7 +10,7 @@ class Serve(protocol.Protocol):
         spd='150'
         pitch='60'
         amp='10'
-        bits=data.strip().split(';')
+        bits=data.strip().split('\t')
         try:
             words=bits.pop()
             voice=''.join(x for x in (bits.pop(0) or voice) if x in ALLOWCHARS)
@@ -20,6 +20,7 @@ class Serve(protocol.Protocol):
             kaps=str(min(max(int(bits.pop(0) or kaps),0),99))
         except Exception as e:
             pass
+#        print(['espeak','--stdin','-v'+voice,'-k'+kaps,'-s'+spd,'-p'+pitch,'-a'+amp])
         s = subprocess.Popen(['espeak','--stdin','-v'+voice,'-k'+kaps,'-s'+spd,'-p'+pitch,'-a'+amp],stdin=subprocess.PIPE,stderr=subprocess.PIPE)
         s.communicate(words)
 def main():
