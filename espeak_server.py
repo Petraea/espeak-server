@@ -10,14 +10,14 @@ class Serve(protocol.Protocol):
         kaps='20'
         spd='150'
         pitch='60'
-        amp='10'
+        amp='100'
         bits=data.strip().split('\t')
         try:
             words=bits.pop()
             voice=''.join(x for x in (bits.pop(0) or voice) if x in ALLOWCHARS)
             spd=str(min(max(int(bits.pop(0) or spd),0),400))
             pitch=str(min(max(int(bits.pop(0) or pitch),0),99))
-            amp=str(min(max(int(bits.pop(0) or amp),0),20))
+            amp=str(min(max(int(bits.pop(0) or amp),0),200))
             kaps=str(min(max(int(bits.pop(0) or kaps),0),99))
         except Exception as e:
             pass
