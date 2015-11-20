@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Script for /etc/init.d to daemonise the espeak-server process
+#
+SCREEN=/usr/bin/screen
+SCREENFLAGS="-D -m"
+NAME=espeak_server
+BIN=/opt/espeak-server/$NAME.py
+test -x $BIN || exit 5
+PIDFILE=/tmp/$NAME.pid
+RUNAS=speechuser
+
+case "$1" in
+      start)
+            echo "Starting $NAME ... "
+            start-stop-daemon -c $RUNAS -S -m -p $PIDFILE -b -a $SCREEN -- $SCREENFLAGS $BIN
+            echo "running"
+            ;;
+      stop)
+            echo "Stopping $NAME ... "
+            start-stop-daemon -K -p $PIDFILE
+            echo "stopped"
+            ;;
+      restart)
+            echo "Stopping $NAME ... "
+            start-stop-daemon -K -p $PIDFILE
+            echo "Starting $NAME ... "
+            start-stop-daemon -C $RUNAS -S -m -p $PIDFILE -b -a $SCREEN -- $SCREENFLAGS $BIN
+            echo "running"
+            ;;
+          *)
+            echo "Usage: $0 start|stop|restart"
+            exit 1
+            ;;
+esac
+
+
